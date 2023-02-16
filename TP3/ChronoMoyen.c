@@ -14,10 +14,6 @@ int main() {
 
     long int duree_totale = 0;
     bool chrono = FALSE;
-    // char *timer[4] = {"00",
-    //                   "00",
-    //                   "00",
-    //                   "00"};
 
     int touche = -1;
 
