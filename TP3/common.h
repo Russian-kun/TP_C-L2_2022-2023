@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <ncurses.h>
+#include <string.h>
 
 #define _DEFAULT_SOURCE 1
 
