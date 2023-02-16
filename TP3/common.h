@@ -1,3 +1,5 @@
+#ifndef COMMON_H
+#define COMMON_H
 #include <sys/time.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -7,6 +9,11 @@
 #include <string.h>
 
 #define _DEFAULT_SOURCE 1
+
+typedef struct _chronometre_ {
+    int duree_totale, avertissement, indice_der_tour, nb_tours;
+    int* tab[6];
+} Chronometre;
 
 /**
  * @brief Renvoie le nombre de millisecondes entre deux timeval
@@ -48,3 +55,7 @@ int nb_ms_vers_minutes(int nb_ms);
  * @return int
  */
 int nb_ms_vers_heures(int nb_ms);
+
+Chronometre initialiser_chronometre();
+
+#endif

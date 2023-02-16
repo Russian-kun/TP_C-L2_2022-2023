@@ -24,3 +24,15 @@ int nb_ms_vers_heures(int nb_ms) {
     short int tmp = (short int)(nb_ms / 360000);
     return tmp < 0 ? tmp * -1 : tmp;
 }
+
+Chronometre initialiser_chronometre() {
+    Chronometre c;
+    c.duree_totale = 0;
+    c.avertissement = 25000;
+    c.indice_der_tour = 0;
+    c.nb_tours = 0;
+    for (int i = 0; i < 6; i++) {
+        c.tab[i] = malloc(sizeof(int));
+    }
+    return c;
+}
