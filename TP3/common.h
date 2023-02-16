@@ -1,9 +1,11 @@
 #include <sys/time.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdbool.h>
+#include <ncurses.h>
 
-struct timeval temps_debut, temps_fin;
-
-// int gettimeofday(struct timeval *tv, struct timezone *tz);
+#define _DEFAULT_SOURCE 1
 
 /**
  * @brief Renvoie le nombre de millisecondes entre deux timeval
