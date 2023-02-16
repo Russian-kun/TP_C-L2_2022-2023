@@ -12,7 +12,7 @@
 
 typedef struct _chronometre_ {
     int duree_totale, avertissement, indice_der_tour, nb_tours;
-    int* tab[6];
+    int tab[6];
 } Chronometre;
 
 /**
@@ -57,5 +57,7 @@ int nb_ms_vers_minutes(int nb_ms);
 int nb_ms_vers_heures(int nb_ms);
 
 Chronometre initialiser_chronometre();
+
+void ajouter_tour(Chronometre* chrono);
 
 #endif

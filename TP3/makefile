@@ -2,10 +2,10 @@ COMP  := gcc
 COMP_RED := -Wall -Wfatal-errors -fdiagnostics-color=always
 COMP_FLAGS := $(COMP_RED) -lncurses
 
-all: ChronoMoyen ChronoSimple main
+all: ChronoMoyen ChronoSimple Chrono
 
-main: main.c common.o graphique.o
-	$(COMP) main.c common.o graphique.o -o main $(COMP_FLAGS)
+Chrono: Chrono.c common.o graphique.o
+	$(COMP) Chrono.c common.o graphique.o -o Chrono $(COMP_FLAGS)
 
 ChronoSimple: ChronoSimple.c common.o
 	$(COMP) ChronoSimple.c common.o -o ChronoSimple $(COMP_FLAGS)
@@ -20,4 +20,4 @@ common.o : common.h common.c
 	$(COMP) -c common.c $(COMP_FLAGS)
 
 clean:
-	rm *.o ChronoMoyen ChronoSimple main
+	rm *.o ChronoMoyen ChronoSimple Chrono

@@ -52,3 +52,25 @@ void afficher_interface(Chronometre chrono) {
 
     mvprintw(0, COLS / 2 - 10, "Chronometre");
 }
+
+void afficher_flash() {
+    move(LINES - 8, 0);
+    for (int i = 0; i < COLS - 1; i++) {
+        attron(1);
+        addch('-');
+        attroff(1);
+        attron(2);
+        addch('-');
+        attroff(2);
+    }
+    refresh();
+    for (int i = 0; i < COLS - 1; i++) {
+        attron(2);
+        addch('-');
+        attroff(2);
+        attron(1);
+        addch('-');
+        attroff(1);
+    }
+    refresh();
+}
