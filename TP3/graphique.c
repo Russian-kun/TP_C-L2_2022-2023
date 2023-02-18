@@ -1,6 +1,6 @@
 #include "common.h"
 #include "graphique.h"
-#define string char *
+#define string char*
 
 void afficher_duree(int y, int x, int nb_ms) {
     string text = calloc(sizeof(char), 100);
