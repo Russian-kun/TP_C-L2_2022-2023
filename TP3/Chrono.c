@@ -14,6 +14,7 @@ int main() {
     afficher_interface(chrono);
     refresh();
     while (1) {
+        touche = getch();
         switch (touche) {
             case 'q':
                 quit = 1;
