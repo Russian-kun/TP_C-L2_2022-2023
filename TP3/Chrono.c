@@ -88,6 +88,23 @@ int main() {
         if (quit) {
             break;
         }
+
+        if (avertissement(chrono)) {
+            afficher_flash();
+            pause = 1;
+        }
+
+        if (!pause) {
+            gettimeofday(&last_time, NULL);
+            chrono.duree_totale = intervalle_ms(first_time, last_time);
+            afficher_interface(chrono);
+            refresh = 1;
+        }
+
+        if (refresh) {
+            refresh();
+            refresh = 0;
+        }
     }
 
     getch();
