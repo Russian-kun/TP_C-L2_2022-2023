@@ -31,6 +31,9 @@ Chronometre initialiser_chronometre() {
     c.avertissement = 25000;
     c.indice_der_tour = 0;
     c.nb_tours = 0;
+    for (int i = 0; i < 6; i++) {
+        c.tab[i] = 0;
+    }
     return c;
 }
 
