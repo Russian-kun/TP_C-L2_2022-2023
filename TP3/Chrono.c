@@ -20,6 +20,66 @@ int main() {
             case ' ':
                 ajouter_tour(&chrono);
                 afficher_interface(chrono);
+                refresh = 1;
+                break;
+
+            case KEY_F(0):
+                chrono.avertissement = 25000;
+                afficher_interface(chrono);
+                refresh = 1;
+                break;
+
+            case KEY_F(1):
+                chrono.avertissement += 1000 * 60 * 60;
+                chrono.avertissement = chrono.avertissement > 360060990 ? 360060990 : chrono.avertissement;
+                afficher_interface(chrono);
+                refresh = 1;
+                break;
+
+            case KEY_F(2):
+                chrono.avertissement -= 1000 * 60 * 60;
+                chrono.avertissement = chrono.avertissement < 0 ? 0 : chrono.avertissement;
+                afficher_interface(chrono);
+                refresh = 1;
+                break;
+
+            case KEY_F(3):
+                chrono.avertissement += 1000 * 60;
+                chrono.avertissement = chrono.avertissement > 360060990 ? 360060990 : chrono.avertissement;
+                afficher_interface(chrono);
+                refresh = 1;
+                break;
+
+            case KEY_F(4):
+                chrono.avertissement -= 1000 * 60;
+                chrono.avertissement = chrono.avertissement < 0 ? 0 : chrono.avertissement;
+                afficher_interface(chrono);
+                refresh = 1;
+                break;
+
+            case KEY_F(5):
+                chrono.avertissement += 1000;
+                chrono.avertissement = chrono.avertissement > 360060990 ? 360060990 : chrono.avertissement;
+                afficher_interface(chrono);
+                refresh = 1;
+                break;
+
+            case KEY_F(6):
+                chrono.avertissement -= 1000;
+                chrono.avertissement = chrono.avertissement < 0 ? 0 : chrono.avertissement;
+                afficher_interface(chrono);
+                refresh = 1;
+                break;
+
+            case KEY_RESIZE:
+                while (LINES <= MINY || COLS <= MINX || touche == 'q') {
+                    clear();
+                    afficher_interface(chrono);
+                    attron(COLOR_PAIR(1));
+                    mvprintw(LINES / 2, COLS / 2 - 33 / 2, "Taille de la fenetre trop petite");
+                    attroff(COLOR_PAIR(1));
+                    nodelay(stdscr, FALSE);
+                    touche = getch();
                 refresh();
                 break;
             default:
