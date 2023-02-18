@@ -1,6 +1,6 @@
 FILES := *.o ChronoMoyen ChronoSimple Chrono
 COMP  := gcc
-COMP_RED := -Wall -Wfatal-errors -fdiagnostics-color=always -g
+COMP_RED := -Wall -Wfatal-errors -fdiagnostics-color=always
 COMP_FLAGS := $(COMP_RED) -lncurses
 
 all: ChronoMoyen ChronoSimple Chrono
