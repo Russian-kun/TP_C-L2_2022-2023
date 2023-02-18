@@ -54,7 +54,6 @@ void ajouter_tour(Chronometre *chrono) {
     }
     chrono->nb_tours++;
     chrono->indice_der_tour++;
-    chrono->tab[chrono->indice_der_tour - 1] = chrono->duree_totale;
 }
 
 int avertissement(Chronometre chrono) {
