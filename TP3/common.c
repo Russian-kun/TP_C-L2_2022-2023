@@ -41,10 +41,10 @@ void reinitialiser_chronometre(Chronometre *chrono) {
 }
 
 void ajouter_tour(Chronometre *chrono) {
-    if (chrono->indice_der_tour == 6) {
-        for (int i = 0; i < 5; i++) {
-            chrono->tab[i] = chrono->tab[i + 1];
-        }
+    for (int i = 0; i < chrono->nb_tours; i++) {
+        int ind_inv = chrono->nb_tours - i - 1;
+        chrono->tab[ind_inv] = chrono->tab[ind_inv - 1];
+    }
         chrono->indice_der_tour--;
     }
     chrono->nb_tours++;
