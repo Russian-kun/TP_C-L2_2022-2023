@@ -35,10 +35,11 @@ Chronometre initialiser_chronometre() {
 }
 
 void ajouter_tour(Chronometre *chrono) {
-    for (int i = 0; i < 5; i++) {
-        chrono->tab[i] = chrono->tab[i + 1];
+    if (chrono->indice_der_tour == 5) {
+        for (int i = 0; i < 5; i++) {
+            chrono->tab[i] = chrono->tab[i + 1];
+        }
     }
-    chrono->tab[chrono->indice_der_tour - (chrono->indice_der_tour % 6 == 0 ? 0 : 1)] = chrono->duree_totale;
-    chrono->indice_der_tour = chrono->indice_der_tour + 1 == 6 ? 6 : chrono->indice_der_tour + 1;
     chrono->nb_tours++;
+    chrono->tab[chrono->indice_der_tour] = chrono->duree_totale;
 }
