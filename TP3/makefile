@@ -1,3 +1,4 @@
+FILES := *.o ChronoMoyen ChronoSimple Chrono
 COMP  := gcc
 COMP_RED := -Wall -Wfatal-errors -fdiagnostics-color=always
 COMP_FLAGS := $(COMP_RED) -lncurses
@@ -20,4 +21,8 @@ common.o : common.h common.c
 	$(COMP) -c common.c $(COMP_FLAGS)
 
 clean:
-	rm *.o ChronoMoyen ChronoSimple Chrono
+	for file in $(FILES); do \
+		if [ -f $$file ]; then \
+			rm $$file; \
+		fi; \
+	done
