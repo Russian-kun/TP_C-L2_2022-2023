@@ -16,12 +16,12 @@ int nb_ms_vers_secondes(int nb_ms) {
 }
 
 int nb_ms_vers_minutes(int nb_ms) {
-    short int tmp = (short int)(nb_ms / 60000) % 60;
+    short int tmp = (short int)(nb_ms / (1000 * 60)) % 60;
     return tmp < 0 ? tmp * -1 : tmp;
 }
 
 int nb_ms_vers_heures(int nb_ms) {
-    short int tmp = (short int)(nb_ms / 360000);
+    short int tmp = (short int)(nb_ms / (1000 * 60 * 60)) % 99;
     return tmp < 0 ? tmp * -1 : tmp;
 }
 
