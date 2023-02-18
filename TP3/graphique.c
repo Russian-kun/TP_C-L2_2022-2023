@@ -55,22 +55,19 @@ void afficher_interface(Chronometre chrono) {
 
 void afficher_flash() {
     move(LINES - 8, 0);
-    for (int i = 0; i < COLS - 1; i++) {
-        attron(1);
-        addch('-');
-        attroff(1);
-        attron(2);
-        addch('-');
-        attroff(2);
+    for (int i = 0; i < COLS; i++) {
+        attron(1);  // + i % 2
+        addch('*');
+        attroff(1);  // + i % 2
     }
     refresh();
-    for (int i = 0; i < COLS - 1; i++) {
-        attron(2);
-        addch('-');
-        attroff(2);
-        attron(1);
-        addch('-');
-        attroff(1);
+    usleep(100000);
+    move(LINES - 8, 0);
+    for (int i = 0; i < COLS; i++) {
+        attron(2);  // - i % 2
+        addch('*');
+        attroff(2);  // - i % 2
     }
     refresh();
+    usleep(100000);
 }
