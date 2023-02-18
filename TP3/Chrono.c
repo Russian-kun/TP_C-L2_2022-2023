@@ -26,9 +26,36 @@ int main() {
     while (1) {
         touche = getch();
         switch (touche) {
+            case 32:
+                pause = !pause;
+                if (pause) {
+                    mvprintw(0, 0, "P");
+                    refresh = 1;
+                } else {
+                    mvprintw(0, 0, " ");
+                    gettimeofday(&first_time, NULL);
+                    int sec_tmp = (int)(chrono.duree_totale / 1000);
+                    first_time.tv_sec -= sec_tmp;
+                    first_time.tv_usec -= (chrono.duree_totale - sec_tmp * 1000) * 1000;
+                }
+                break;
+
             case 'q':
                 quit = 1;
-            case ' ':
+                break;
+
+            case 'r':
+                pause = 1;
+                reinitialiser_chronometre(&chrono);
+                gettimeofday(&first_time, NULL);
+                last_time = first_time;
+
+                clear();
+                afficher_interface(chrono);
+                refresh = 1;
+                break;
+
+            case 't':
                 ajouter_tour(&chrono);
                 afficher_interface(chrono);
                 refresh = 1;
@@ -91,8 +118,14 @@ int main() {
                     attroff(COLOR_PAIR(1));
                     nodelay(stdscr, FALSE);
                     touche = getch();
-                refresh();
+                    refresh();
+                }
+                clear();
+                afficher_interface(chrono);
+                nodelay(stdscr, TRUE);
+                refresh = 1;
                 break;
+
             default:
                 break;
         }
@@ -118,7 +151,7 @@ int main() {
         }
     }
 
-    getch();
+    // getch();
     endwin();
     return 0;
 }

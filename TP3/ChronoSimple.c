@@ -4,7 +4,6 @@ int main() {
     int tmp = 500;
     int cent = 0, sec = 0, min = 0, heu = 0;
     int milli = 0;
-    int milli2 = milli;
     struct timeval *deb = malloc(sizeof(struct timeval));
     struct timeval *fin = malloc(sizeof(struct timeval));
     printf("%d : %d : %d : %d\n", heu, min, sec, cent);
@@ -15,7 +14,6 @@ int main() {
         gettimeofday(fin, NULL);
 
         milli = intervalle_ms(*deb, *fin);
-        milli2 = milli;
         cent = nb_ms_vers_centiemes(milli);
         sec = nb_ms_vers_secondes(milli);
         milli -= sec * 1000;
@@ -24,7 +22,7 @@ int main() {
         heu = nb_ms_vers_heures(milli);
         milli -= heu * 360000;
 
-        printf("%d : %d : %d : %d : %d : %d\n", heu, min, sec, cent, milli, milli2);
+        printf("%d : %d : %d : %d\n", heu, min, sec, cent);
     }
     free(deb);
     free(fin);
