@@ -58,6 +58,10 @@ int nb_ms_vers_heures(int nb_ms);
 
 Chronometre initialiser_chronometre();
 
+void reinitialiser_chronometre(Chronometre* chrono);
+
 void ajouter_tour(Chronometre* chrono);
+
+int avertissement(Chronometre chrono);
 
 #endif

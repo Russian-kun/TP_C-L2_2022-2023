@@ -34,12 +34,24 @@ Chronometre initialiser_chronometre() {
     return c;
 }
 
+void reinitialiser_chronometre(Chronometre *chrono) {
+    chrono->duree_totale = 0;
+    chrono->indice_der_tour = 0;
+    chrono->nb_tours = 0;
+}
+
 void ajouter_tour(Chronometre *chrono) {
-    if (chrono->indice_der_tour == 5) {
+    if (chrono->indice_der_tour == 6) {
         for (int i = 0; i < 5; i++) {
             chrono->tab[i] = chrono->tab[i + 1];
         }
+        chrono->indice_der_tour--;
     }
     chrono->nb_tours++;
-    chrono->tab[chrono->indice_der_tour] = chrono->duree_totale;
+    chrono->indice_der_tour++;
+    chrono->tab[chrono->indice_der_tour - 1] = chrono->duree_totale;
+}
+
+int avertissement(Chronometre chrono) {
+    return chrono.duree_totale > chrono.avertissement;
 }
