@@ -9,10 +9,16 @@ int main() {
 
     keypad(stdscr, TRUE);
     noecho();
+    nodelay(stdscr, TRUE);
     curs_set(0);
 
-    int touche = -1;
-    int quit = 0;
+    int pause = 1, quit = 0, refresh = 1, touche = -1;
+
+    struct timeval first_time;
+    struct timeval last_time;
+
+    gettimeofday(&first_time, NULL);
+    last_time = first_time;
 
     Chronometre chrono = initialiser_chronometre();
     afficher_interface(chrono);
