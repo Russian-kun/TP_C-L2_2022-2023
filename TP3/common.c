@@ -44,15 +44,14 @@ void reinitialiser_chronometre(Chronometre *chrono) {
 }
 
 void ajouter_tour(Chronometre *chrono) {
+    chrono->nb_tours -= chrono->nb_tours >= 6;
+
     for (int i = 0; i < chrono->nb_tours; i++) {
-        int ind_inv = chrono->nb_tours - i - 1;
+        int ind_inv = chrono->nb_tours - i;
         chrono->tab[ind_inv] = chrono->tab[ind_inv - 1];
     }
-    chrono->tab[0] = chrono->duree_totale;
-    if (chrono->nb_tours == 6) {
-        chrono->nb_tours--;
-    }
     chrono->nb_tours++;
+    chrono->tab[0] = chrono->duree_totale;
     chrono->indice_der_tour++;
 }
 
