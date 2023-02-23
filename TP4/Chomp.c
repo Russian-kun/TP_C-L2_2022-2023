@@ -5,6 +5,10 @@
 int main() {
     initscr();
     curs_set(0);
+    noecho();
+
+    start_color();
+    init_pair(1, COLOR_BLACK, COLOR_BLACK);
 
     Position pos;
     pos.carre = creer_tablette();

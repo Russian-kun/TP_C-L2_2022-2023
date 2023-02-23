@@ -47,6 +47,8 @@ Tablette creer_tablette();
  */
 void manger(Tablette *tab, int x, int y);
 
+int est_legal(Position pos, Coup coup);
+
 /**
  * @brief Test si le jeu est fini. Devrai etre appele apres
  * les coups

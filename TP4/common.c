@@ -22,6 +22,10 @@ void manger(Tablette *tab, int x, int y) {
     }
 }
 
+int est_legal(Position pos, Coup coup) {
+    return pos.carre.tab[coup.x][coup.y];
+}
+
 /**
  * @brief Test si le jeu est fini. Devrai etre appele apres
  * les coups
@@ -39,6 +43,8 @@ int est_jeu_termine(Position pos, Joueur *joueur_gagnant) {
 }
 
 void jouer_coup(Position *pos, Coup coup) {
+    if (!est_legal(*pos, coup))
+        return;
     manger(&pos->carre, coup.x, coup.y);
     pos->player = adversaire(pos->player);
 }
