@@ -1,8 +1,9 @@
 #ifndef COMMON_H
 #define COMMON_H
-#define NB_LIGNES 8
-#define NB_COLONNES 16
+#define NB_LIGNES 3
+#define NB_COLONNES 5
 
+/// @brief Une tablette est un tableau NB_LIGNES * NB_COLONNES
 typedef struct _tablette {
     int tab[NB_LIGNES][NB_COLONNES];
 } Tablette;
@@ -10,11 +11,13 @@ typedef struct _tablette {
 typedef enum _joueur { JOUEUR_1,
                        JOUEUR_2 } Joueur;
 
+/// @brief Une position est une tablette et un joueur
 typedef struct _position {
     Tablette carre;
     Joueur player;
 } Position;
 
+/// @brief Un coup est une position (x, y) sur la tablette
 typedef struct _coup {
     int x, y;
 } Coup;
@@ -47,6 +50,13 @@ Tablette creer_tablette();
  */
 void manger(Tablette *tab, int x, int y);
 
+/**
+ * @brief Test si le coup est legal
+ *
+ * @param pos
+ * @param coup
+ * @return int
+ */
 int est_legal(Position pos, Coup coup);
 
 /**
@@ -60,7 +70,8 @@ int est_legal(Position pos, Coup coup);
 int est_jeu_termine(Position pos, Joueur *joueur_gagnant);
 
 /**
- * @brief Joue le coup coup dans la position pos.
+ * @brief Joue le coup coup dans la position pos si il est
+ * legal.
  *
  * @param pos
  * @param coup
