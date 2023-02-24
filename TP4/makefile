@@ -1,9 +1,9 @@
-FILES := *.o *.gch *.out Chomp
+FILES := *.o *.gch *.out Chomp Chomp_non_modulaire
 COMP  := gcc
 COMP_RED := -Wall -Wfatal-errors -fdiagnostics-color=always -g
 COMP_FLAGS := $(COMP_RED) -lncurses
 
-Chomp: Chomp.c graphique.o common.o makefile
+Chomp: Chomp.c graphique.o makefile
 	$(COMP) Chomp.c graphique.o common.o $(COMP_FLAGS) -o Chomp
 
 graphique.o: graphique.c graphique.h common.o makefile
@@ -11,6 +11,16 @@ graphique.o: graphique.c graphique.h common.o makefile
 
 common.o: common.c common.h makefile
 	$(COMP) -c common.c common.h $(COMP_FLAGS)
+
+Chomp_non_modulaire: makefile
+	$(COMP) Chomp_non_modulaire.c $(COMP_FLAGS) -o Chomp_non_modulaire
+
+all: Chomp.c graphique.o common.o common.c common.h graphique.c graphique.h makefile
+	make clean
+	$(COMP) -c common.c common.h $(COMP_FLAGS)
+	$(COMP) -c graphique.c graphique.h common.o $(COMP_FLAGS)
+	$(COMP) Chomp.c graphique.o common.o $(COMP_FLAGS) -o Chomp
+	$(COMP) Chomp_non_modulaire.c $(COMP_FLAGS) -o Chomp_non_modulaire
 
 clean:
 	for file in $(FILES); do \
