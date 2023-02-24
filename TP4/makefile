@@ -12,15 +12,16 @@ graphique.o: graphique.c graphique.h common.o makefile
 common.o: common.c common.h makefile
 	$(COMP) -c common.c common.h $(COMP_FLAGS)
 
-Chomp_non_modulaire: makefile
-	$(COMP) Chomp_non_modulaire.c $(COMP_FLAGS) -o Chomp_non_modulaire
+nonmodulaire: makefile
+	$(COMP) chomp_nonmodulaire.c $(COMP_FLAGS) -o nonmodulaire
+	./nonmodulaire
 
 all: Chomp.c graphique.o common.o common.c common.h graphique.c graphique.h makefile
 	make clean
 	$(COMP) -c common.c common.h $(COMP_FLAGS)
 	$(COMP) -c graphique.c graphique.h common.o $(COMP_FLAGS)
 	$(COMP) Chomp.c graphique.o common.o $(COMP_FLAGS) -o Chomp
-	$(COMP) Chomp_non_modulaire.c $(COMP_FLAGS) -o Chomp_non_modulaire
+	$(COMP) chomp_nonmodulaire.c $(COMP_FLAGS) -o nonmodulaire
 
 clean:
 	for file in $(FILES); do \
