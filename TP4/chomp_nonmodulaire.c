@@ -1,4 +1,113 @@
-#include "graphique.h"
+#include <ncurses.h>
+#include <string.h>
+#include <stdlib.h>
+#define NB_LIGNES 3
+#define NB_COLONNES 5
+
+/// @brief Une tablette est un tableau NB_LIGNES * NB_COLONNES
+typedef struct _tablette {
+    int tab[NB_LIGNES][NB_COLONNES];
+} Tablette;
+
+typedef enum _joueur { JOUEUR_1,
+                       JOUEUR_2 } Joueur;
+
+/// @brief Une position est une tablette et un joueur
+typedef struct _position {
+    Tablette carre;
+    Joueur player;
+} Position;
+
+/// @brief Un coup est une position (x, y) sur la tablette
+typedef struct _coup {
+    int x, y;
+} Coup;
+
+/**
+ * @brief Renvoie l’adversaire du joueur
+ *
+ * @param joueur
+ * @return Joueur
+ */
+Joueur adversaire(Joueur joueur) {
+    return !joueur;
+}
+
+/**
+ * @brief Renvoie une variable de Tablette de dimension
+ * NB_LIGNES * NB_COLONNES. La tablette renvoyée
+ * possède tous ses carrés de chocolat.
+ *
+ * @return Tablette
+ */
+Tablette creer_tablette() {
+    Tablette tab;
+    for (int i = 0; i < NB_LIGNES; i++) {
+        for (int j = 0; j < NB_COLONNES; j++) {
+            tab.tab[i][j] = 1;
+        }
+    }
+    return tab;
+}
+
+/**
+ * @brief modifie la tablette tab de sorte à manger le carré de
+ * chocolat en position (x, y) ainsi que tous ceux qui sont en
+ * dessous de lui et à sa droite.
+ *
+ * @param tab
+ * @param x
+ * @param y
+ */
+void manger(Tablette *tab, int x, int y) {
+    for (int j = x; j < NB_COLONNES; j++) {
+        for (int i = y; i < NB_LIGNES; i++) {
+            tab->tab[i][j] = 0;
+        }
+    }
+}
+
+/**
+ * @brief Test si le coup est legal
+ *
+ * @param pos
+ * @param coup
+ * @return int
+ */
+int est_legal(Position pos, Coup coup) {
+    return pos.carre.tab[coup.y][coup.x];
+}
+
+/**
+ * @brief Test si le jeu est fini. Devrai etre appele apres
+ * les coups. Puisque jouer_coup change le joueur, on
+ * considere que le joueur actuel est celui qui a gagne.
+ *
+ * @param pos
+ * @param joueur_gagnant
+ * @return int
+ */
+int est_jeu_termine(Position pos, Joueur *joueur_gagnant) {
+    if (!pos.carre.tab[0][0]) {
+        *joueur_gagnant = pos.player;
+        return 1;
+    }
+    return 0;
+}
+
+/**
+ * @brief Joue le coup coup dans la position pos si il est
+ * legal.
+ *
+ * @param pos
+ * @param coup
+ */
+void jouer_coup(Position *pos, Coup coup) {
+    if (!est_legal(*pos, coup))
+        return;
+    manger(&pos->carre, coup.x, coup.y);
+    pos->player = adversaire(pos->player);
+}
 
 /**
  * @brief Retourne la taille d'un carré en fonction de la taille de la fenêtre
@@ -21,23 +130,6 @@ int get_carre_size() {
         return -1;
     }
     return carre;
-}
-
-/**
- * @brief Transforme un couple de coordonnees sur une fenetre en coordonnees
- * sur la grille
- *
- * @param x
- * @param y
- * @return Coup
- */
-int is_in_carre(int x, int y, Coup *coup) {
-    Coup coords = couple_to_coord(x, y);
-    if (coords.x != -1 && coords.y != -1) {
-        *coup = coords;
-        return 1;
-    }
-    return 0;
 }
 
 /**
@@ -124,6 +216,23 @@ Coup couple_to_coord(int x, int y) {
 }
 
 /**
+ * @brief Transforme un couple de coordonnees sur une fenetre en coordonnees
+ * sur la grille
+ *
+ * @param x
+ * @param y
+ * @return Coup
+ */
+int is_in_carre(int x, int y, Coup *coup) {
+    Coup coords = couple_to_coord(x, y);
+    if (coords.x != -1 && coords.y != -1) {
+        *coup = coords;
+        return 1;
+    }
+    return 0;
+}
+
+/**
  * @brief Lit un coup sur la fenetre graphique et le retourne
  * sous forme de Coup
  *
@@ -151,4 +260,42 @@ Coup lire_coup(Position pos) {
             }
         }
     }
+}
+
+int main() {
+    initscr();
+    curs_set(0);
+    noecho();
+    keypad(stdscr, TRUE);
+    mousemask(ALL_MOUSE_EVENTS, NULL);
+
+    start_color();
+    init_pair(1, COLOR_RED, COLOR_BLACK);
+
+    Position pos;
+    pos.carre = creer_tablette();
+    Coup coup;
+    Joueur gagnant;
+
+    while (pos.carre.tab[0][0]) {
+        mvprintw(0, 0, "Tour du joueur %d", pos.player + 1);
+        afficher_position(pos);
+        // mvprintw(LINES / 2, COLS / 2, "O");
+        refresh();
+
+        coup = lire_coup(pos);
+        jouer_coup(&pos, coup);
+        if (est_jeu_termine(pos, &gagnant))
+            break;
+        clear();
+    }
+    clear();
+
+    int len = strlen("Victoire du Joueur  ");
+    mvprintw(LINES / 2, COLS / 2 - len / 2, "Victoire du Joueur %d", gagnant + 1);
+
+    refresh();
+    getch();
+    endwin();
+    return 0;
 }

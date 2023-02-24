@@ -2,6 +2,7 @@
 #define GRAPHIQUE_H
 #include "common.h"
 #include <ncurses.h>
+#include <stdlib.h>
 
 /**
  * @brief Retourne la taille d'un carré en fonction de la taille de la fenêtre
