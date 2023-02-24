@@ -1,6 +1,6 @@
 # TP4
 
-BAILLARGEAU Axel
+BAILLARGEAU Axel<br>
 BOUHAFA Siwar
 
 ## Introduction
@@ -42,3 +42,8 @@ Pour compiler le code, il est possible d'utiliser le script `Compilation.sh` fou
 ### Execution
 
 Pour executer le code, il est possible d'utiliser le script `Execution.sh` fourni ou bien le makefile. Notez que le makefile n'utilise pas le script `Execution.sh`. Afin d'executer la version non modulaire avec le makefile, il faut utiliser la commande `make nonmodulaire`.
+
+### Documentation
+
+La documentation est generable avec la commande `make doc`. Elle est disponible dans le dossier `doc`.
+La commande utilise `doxygen` pour generer la documentation.

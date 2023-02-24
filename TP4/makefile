@@ -23,6 +23,11 @@ all: Chomp.c graphique.o common.o common.c common.h graphique.c graphique.h make
 	$(COMP) Chomp.c graphique.o common.o $(COMP_FLAGS) -o Chomp
 	$(COMP) chomp_nonmodulaire.c $(COMP_FLAGS) -o nonmodulaire
 
+doc: ./docs makefile
+
+./docs: makefile
+	doxygen docs/Doxyfile
+
 clean:
 	for file in $(FILES); do \
 		if [ -f $$file ]; then \
