@@ -7,10 +7,10 @@ Snake: Snake.c graphisme.o logique.o makefile
 	$(COMP) Snake.c graphisme.o logique.o $(COMP_FLAGS) -o Snake
 
 graphisme.o: graphisme.c graphisme.h makefile
-	$(COMP) -c graphisme.c graphisme.h $(COMP_FLAGS)
+	$(COMP) -c graphisme.c $(COMP_FLAGS)
 
 logique.o: logique.c logique.h makefile
-	$(COMP) -c logique.c logique.h $(COMP_FLAGS)
+	$(COMP) -c logique.c $(COMP_FLAGS)
 
 #: common.h makefile
 # 	$(COMP) -c common.h $(COMP_FLAGS)

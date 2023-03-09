@@ -9,12 +9,14 @@ void interface_afficher_quadrillage(Monde mon) {
 }
 
 void interface_afficher_pommes(Pomme pom) {
-    mvprintw(pom.pos->y, pom.pos->x, "o");
+    mvprintw(pom.y, pom.x, "o");
 }
 
 void interface_afficher_pommes_liste(ListePomme *l) {
-    while (l != NULL) {
-        interface_afficher_pommes(*l->pomme);
+    while (l != NULL && l->pos != NULL) {
+        attron(COLOR_PAIR(l->type));
+        interface_afficher_pommes(*l->pos);
+        attroff(COLOR_PAIR(l->type));
         l = l->suiv;
     }
 }
@@ -23,6 +25,14 @@ void interface_afficher_serpent(Serpent s) {
     Body *b = s.tete;
     while (b != NULL) {
         mvprintw(b->pos->y, b->pos->x, "x");
+        b = b->suiv;
+    }
+}
+
+void effacer_serpent(Serpent s) {
+    Body *b = s.tete;
+    while (b != NULL) {
+        mvprintw(b->pos->y, b->pos->x, " ");
         b = b->suiv;
     }
 }
@@ -37,16 +47,27 @@ void interface_piloter(Monde *mon) {
     int c = getch();
     switch (c) {
         case KEY_UP:
-            mon->snake.direction = UP;
-            break;
-        case KEY_DOWN:
-            mon->snake.direction = DOWN;
-            break;
-        case KEY_LEFT:
-            mon->snake.direction = LEFT;
+            if (mon->snake.direction != DOWN)
+                mon->snake.direction = UP;
             break;
         case KEY_RIGHT:
-            mon->snake.direction = RIGHT;
+            if (mon->snake.direction != LEFT)
+                mon->snake.direction = RIGHT;
+            break;
+        case KEY_DOWN:
+            if (mon->snake.direction != UP)
+                mon->snake.direction = DOWN;
+            break;
+        case KEY_LEFT:
+            if (mon->snake.direction != RIGHT)
+                mon->snake.direction = LEFT;
+            break;
+        case 'p':
+            mvprintw(LINES / 2, COLS / 2, "Pause");
+            nodelay(stdscr, FALSE);
+            getch();
+            nodelay(stdscr, TRUE);
+            clear();
             break;
         default:
             break;

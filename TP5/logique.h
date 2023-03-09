@@ -3,24 +3,31 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-// #include "common.h"
 
 typedef struct _case_ {
     int x, y;
-} Case;
+} Case, Pomme;
+
+typedef enum _type_ {
+    SERP,
+    POMM,
+    POIS,
+    BONU,
+    VITE
+} Type;
+
+typedef struct _listecase_ {
+    Case *pos;
+    Type type;
+    struct _listecase_ *suiv;
+} ListeCase, Body, ListePomme;
 
 typedef enum _direction_ {
     UP,
+    RIGHT,
     DOWN,
-    LEFT,
-    RIGHT
+    LEFT
 } Direction;
-
-typedef struct _body_ {
-    Case *pos;
-    struct _body_ *suiv;
-    struct _body_ *prec;
-} Body;
 
 typedef struct _snake_ {
     Body *tete;
@@ -28,19 +35,10 @@ typedef struct _snake_ {
     Direction direction;
 } Serpent;
 
-typedef struct _food_ {
-    Case *pos;
-} Pomme;
-
-typedef struct _foodlist_ {
-    Pomme *pomme;
-    struct _foodlist_ *suiv;
-} ListePomme;
-
 typedef struct _game_ {
     Serpent snake;
     ListePomme *pommes;
-    int score;
+    int score, pause, boost, vitesse, poison;
     int width, height;
 } Monde;
 
@@ -50,9 +48,7 @@ void ajouter_pomme_liste(Pomme *p, ListePomme *l);
 
 void free_pomme_liste(ListePomme *l);
 
-int is_in_Snake(Serpent s, int x, int y);
-
-int is_in_Pomme(ListePomme *l, int x, int y);
+int is_in_Case(ListeCase *l, Case pos);
 
 void monde_ajouter_pomme(Monde *mon);
 
