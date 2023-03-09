@@ -2,6 +2,7 @@
 
 Pomme pomme_aléatoire(int nb_lignes, int nb_colonnes) {
     Pomme p;
+    p.pos = malloc(sizeof(Case));
     p.pos->x = rand() % nb_colonnes;
     p.pos->y = rand() % nb_lignes;
     return p;
@@ -48,7 +49,7 @@ int is_in_Pomme(ListePomme *l, int x, int y) {
 void monde_ajouter_pomme(Monde *mon) {
     Pomme p;
     do {
-        Pomme p = pomme_aléatoire(mon->height, mon->width);
+        p = pomme_aléatoire(mon->height, mon->width);
     } while (is_in_Snake(mon->snake, p.pos->x, p.pos->y) || is_in_Pomme(mon->pommes, p.pos->x, p.pos->y));
     ajouter_pomme_liste(&p, mon->pommes);
 }
@@ -151,4 +152,30 @@ void monde_evoluer_serpent(Monde *mon) {
     b = mon->snake.tete;
     mon->snake.tete = mon->snake.tete->suiv;
     free(b);
+}
+
+void monde_maj(Monde *mon) {
+    monde_evoluer_serpent(mon);
+    // On mange une pomme
+    for (ListePomme *l = mon->pommes; l != NULL; l = l->suiv) {
+        if (l->pomme->pos->x == mon->snake.tete->pos->x && l->pomme->pos->y == mon->snake.tete->pos->y) {
+            mon->score++;
+            // On ajoute une pomme
+            monde_ajouter_pomme(mon);
+            // On ajoute un body au serpent
+            Body *b = mon->snake.tete;
+            while (b->suiv != NULL) {
+                b = b->suiv;
+            }
+            b->suiv = malloc(sizeof(Body));
+            b->suiv->pos = malloc(sizeof(Case));
+            b->suiv->pos->x = b->pos->x;
+            b->suiv->pos->y = b->pos->y;
+            b->suiv->suiv = NULL;
+            // On supprime la pomme
+            ListePomme *tmp = l->suiv;
+            l->suiv = l->suiv->suiv;
+            free(tmp);
+        }
+    }
 }

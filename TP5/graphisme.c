@@ -53,7 +53,8 @@ void interface_piloter(Monde *mon) {
     }
 }
 
-void afficher_victoire(Monde mon) {
-    mvprintw(mon.height / 2, mon.width / 2, "Victoire !");
-    mvprintw(mon.height / 2 + 1, mon.width / 2, "Score : %d", mon.score);
+void afficher_score(Monde mon) {
+    // fin de partie
+    mvprintw(LINES / 2, COLS / 2, "Fin de la partie");
+    mvprintw(LINES / 2 + 1, COLS / 2, "Score : %d", mon.score);
 }

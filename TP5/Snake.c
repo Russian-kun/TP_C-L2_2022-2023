@@ -7,6 +7,7 @@
 #define NB_LIGNES 20
 #define NB_COLONNES 20
 #define TAILLE_SNAKE 5
+#define NB_POMMES 2
 
 int main() {
     // Initialisation de ncurses
@@ -19,7 +20,7 @@ int main() {
     srand(time(NULL));
 
     // Initialisation du monde
-    Monde mon = monde_initialiser(NB_LIGNES, NB_COLONNES, TAILLE_SNAKE);
+    Monde mon = monde_initialiser(NB_LIGNES, NB_COLONNES, TAILLE_SNAKE, NB_POMMES);
 
     // Affichage initial
     interface_afficher_monde(mon);
@@ -42,7 +43,8 @@ int main() {
 
         refresh();
     }
-    afficher_victoire(mon);
+    clear();
+    afficher_score(mon);
     refresh();
 
     // On attend que l'utilisateur appuie sur une touche
